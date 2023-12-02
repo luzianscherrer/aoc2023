@@ -1,2 +1,3 @@
-# aoc2023
-Advent of Code programming challenge
+# Advent of Code Programming Challenge 2023
+
+It's [Advent of Code](https://adventofcode.com/2023) again...
