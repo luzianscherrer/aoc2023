@@ -2,8 +2,8 @@ import re
 
 f = open("day03input.txt", "r")
 
-numbers = [[]]
-symbols = [[]]
+numbers = []
+symbols = []
 for line in f.read().split("\n"):
     number = []
     symbol = []
@@ -13,14 +13,12 @@ for line in f.read().split("\n"):
         symbol.append(match)
     numbers.append(number)
     symbols.append(symbol)
-numbers.append([])
-symbols.append([])
 
 matches = set()
-for si in range(len(symbols)):
-    for symbol in symbols[si]:
+for i in range(len(symbols)):
+    for symbol in symbols[i]:
         x1, x2 = symbol.span()
-        for number in [number for sl in numbers[si - 1 : si + 2] for number in sl]:
+        for number in [number for sl in numbers[i - 1 : i + 2] for number in sl]:
             y1, y2 = number.span()
             if max(x1, y1) <= min(x2, y2):
                 matches.add(number)
