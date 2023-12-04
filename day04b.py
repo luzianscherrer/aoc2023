@@ -7,10 +7,10 @@ win = df.iloc[:, 2:margin].to_numpy()
 card = df.iloc[:, margin + 1 :].to_numpy()
 wins = np.array([np.sum(np.isin(win[i], card[i])) for i in range(win.shape[0])])
 
-pile = [[wins[i]] for i in range(len(wins))]
-for i, cs in enumerate(pile):
-    for c in cs:
-        for j in range(c):
-            pile[i + j + 1].append(wins[i + j + 1])
+piles = np.ones(len(wins), dtype=int)
 
-print(len([i for sl in pile for i in sl]))
+for i, cs in enumerate(piles):
+    for w in range(wins[i]):
+        piles[i + 1 + w] += cs
+
+print(sum(piles))
