@@ -1,16 +1,14 @@
 with open("day05input.txt", "r") as file:
     data = file.readlines()
 
+seeds = [int(i) for i in data[0].strip().split(": ")[1].split(" ")]
 mappings = []
-for i, line in enumerate(data):
+for line in data[2:]:
     line = line.strip()
-    if i == 0:
-        seeds = [int(i) for i in line.split(": ")[1].split(" ")]
-    elif i > 1:
-        if line.endswith(":"):
-            mappings.append([])
-        elif len(line) > 0:
-            mappings[-1].append([int(i) for i in line.split(" ")])
+    if line.endswith(":"):
+        mappings.append([])
+    elif len(line) > 0:
+        mappings[-1].append([int(i) for i in line.split(" ")])
 
 [m.sort(key=lambda x: x[1]) for m in mappings]
 
