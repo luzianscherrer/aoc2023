@@ -1,6 +1,15 @@
 import pandas as pd
 
 symbols = {"A": 0xE, "K": 0xD, "Q": 0xC, "J": 0xB, "T": 0xA}
+values = {
+    (5,): 0xF,
+    (1, 4): 0xE,
+    (2, 3): 0xD,
+    (1, 1, 3): 0xC,
+    (1, 2, 2): 0xB,
+    (1, 1, 1, 2): 0xA,
+    (1, 1, 1, 1, 1): 0x9,
+}
 
 
 def conv(hand):
@@ -9,21 +18,7 @@ def conv(hand):
     for i, c in enumerate(hand[::-1]):
         cards[c] = cards.get(c, 0) + 1
         value += int(symbols.get(c, c)) << i * 4
-    if len(cards.keys()) == 1:
-        value += 0xF00000
-    elif len(cards.keys()) == 2:
-        if list(cards.values())[0] in (1, 4):
-            value += 0xE00000
-        else:
-            value += 0xD00000
-    elif len(cards.keys()) == 4:
-        value += 0xA00000
-    elif len(cards.keys()) == 5:
-        value += 0x900000
-    elif list(cards.values())[0] == 2 or list(cards.values())[1] == 2:
-        value += 0xB00000
-    else:
-        value += 0xC00000
+    value += values[tuple(sorted(cards.values()))] << 20
     return value
 
 

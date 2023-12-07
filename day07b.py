@@ -2,29 +2,22 @@ import pandas as pd
 import itertools
 
 symbols = {"A": 0xE, "K": 0xD, "Q": 0xC, "J": 0x1, "T": 0xA}
+values = {
+    (5,): 0xF,
+    (1, 4): 0xE,
+    (2, 3): 0xD,
+    (1, 1, 3): 0xC,
+    (1, 2, 2): 0xB,
+    (1, 1, 1, 2): 0xA,
+    (1, 1, 1, 1, 1): 0x9,
+}
 
 
 def typescore(hand):
-    value = 0
     cards = {}
-    for c in hand[::-1]:
+    for c in hand:
         cards[c] = cards.get(c, 0) + 1
-    if len(cards.keys()) == 1:
-        value += 0xF00000
-    elif len(cards.keys()) == 2:
-        if list(cards.values())[0] in (1, 4):
-            value += 0xE00000
-        else:
-            value += 0xD00000
-    elif len(cards.keys()) == 4:
-        value += 0xA00000
-    elif len(cards.keys()) == 5:
-        value += 0x900000
-    elif list(cards.values())[0] == 2 or list(cards.values())[1] == 2:
-        value += 0xB00000
-    else:
-        value += 0xC00000
-    return value
+    return values[tuple(sorted(cards.values()))] << 20
 
 
 def conv(hand):
