@@ -29,23 +29,19 @@ def typescore(hand):
 
 def conv(hand):
     value = 0
-    if "J" in hand:
-        indexes = []
-        for i, c in enumerate(hand):
-            if c == "J":
-                indexes.append(i)
-        highscore = 0
+    indexes = []
+    for i, c in enumerate(hand):
+        c == "J" and indexes.append(i)
+    if len(indexes):
+        best = 0
         for p in list(itertools.product("AKQT98765432", repeat=len(indexes))):
             pi = iter(p)
             test = ""
             for i, c in enumerate(hand):
-                if i in indexes:
-                    test += next(pi)
-                else:
-                    test += c
+                test += next(pi) if i in indexes else c
             score = typescore(test)
-            highscore = max(score, highscore)
-        value = highscore
+            best = max(score, best)
+        value = best
     else:
         value = typescore(hand)
     for i, c in enumerate(hand[::-1]):
