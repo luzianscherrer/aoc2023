@@ -45,21 +45,16 @@ G.add_edge(start, neighbors[0][0])
 path = nx.shortest_path(G, start, neighbors[1][0])
 print(len(path) // 2)
 
-n = np.full_like(m, fill_value=".")
+mask = np.zeros(np.array(m.shape) * 3, dtype=int)
 for nodeid in path:
     r = nodeid // m.shape[1]
     c = nodeid % m.shape[1]
-    n[r, c] = m[r, c]
-
-mask = np.zeros((n.shape[0] * 3, n.shape[1] * 3), dtype=int)
-for r in range(n.shape[0]):
-    for c in range(n.shape[1]):
-        mask[r * 3 : r * 3 + 3, c * 3 : c * 3 + 3] = ext[n[r, c]]
+    mask[r * 3 : r * 3 + 3, c * 3 : c * 3 + 3] = ext[m[r, c]]
 
 fill = flood_fill(mask, (0, 0), 1)
 res = 0
-for r in range(n.shape[0]):
-    for c in range(n.shape[1]):
+for r in range(m.shape[0]):
+    for c in range(m.shape[1]):
         check = fill[r * 3 : r * 3 + 3, c * 3 : c * 3 + 3]
         if not check.any():
             res += 1
