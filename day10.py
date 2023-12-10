@@ -27,8 +27,7 @@ for r in range(1, m.shape[0] - 1):
             edges = [(nodeid, t[0] * m.shape[0] + nodeid + t[1]) for t in con[m[r, c]]]
             G.add_edges_from(edges)
 
-G.add_edges_from([(edge[1], edge[0]) for edge in G.in_edges(start)])
-target = list(G.edges(start))[0][1]
-G.remove_edge(start, target)
-path = nx.shortest_path(G, start, target)
+neighbors = list(G.in_edges(start))
+G.add_edge(start, neighbors[0][0])
+path = nx.shortest_path(G, start, neighbors[1][0])
 print(len(path) // 2)
