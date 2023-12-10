@@ -57,12 +57,10 @@ for r in range(n.shape[0]):
         mask[r * 3 : r * 3 + 3, c * 3 : c * 3 + 3] = ext[n[r, c]]
 
 fill = flood_fill(mask, (0, 0), 1)
-
 res = 0
 for r in range(n.shape[0]):
     for c in range(n.shape[1]):
         check = fill[r * 3 : r * 3 + 3, c * 3 : c * 3 + 3]
         if not check.any():
             res += 1
-
 print(res)
