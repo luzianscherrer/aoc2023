@@ -1,6 +1,4 @@
-import pandas as pd
-import numpy as np
-import networkx as nx
+import pandas as pd, numpy as np, networkx as nx
 
 con = {
     "|": [(-1, 0), (1, 0)],
@@ -12,7 +10,7 @@ con = {
 }
 
 m = np.pad(
-    pd.read_csv("day10example.txt", header=None, sep="\s*", engine="python")
+    pd.read_csv("day10input.txt", header=None, sep="\s*", engine="python")
     .iloc[:, 1:-1]
     .to_numpy(),
     pad_width=1,
@@ -25,18 +23,11 @@ for r in range(1, m.shape[0] - 1):
         nodeid = r * m.shape[0] + c
         if m[r, c] == "S":
             start = nodeid
-            if m[r, c - 1] in ("-", "L", "F"):
-                G.add_edge(nodeid, nodeid - 1)
-            if m[r, c + 1] in ("-", "7", "J"):
-                G.add_edge(nodeid, nodeid + 1)
-            if m[r - 1, c] in ("|", "7", "F"):
-                G.add_edge(nodeid, nodeid - m.shape[0])
-            if m[r + 1, c] in ("|", "L", "J"):
-                G.add_edge(nodeid, nodeid + m.shape[0])
         elif m[r, c] != ".":
             edges = [(nodeid, t[0] * m.shape[0] + nodeid + t[1]) for t in con[m[r, c]]]
             G.add_edges_from(edges)
 
+G.add_edges_from([(edge[1], edge[0]) for edge in G.in_edges(start)])
 target = list(G.edges(start))[0][1]
 G.remove_edge(start, target)
 path = nx.shortest_path(G, start, target)
