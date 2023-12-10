@@ -1,4 +1,6 @@
-import pandas as pd, numpy as np, networkx as nx
+import pandas as pd
+import numpy as np
+import networkx as nx
 
 con = {
     "|": [(-1, 0), (1, 0)],
@@ -18,13 +20,13 @@ m = np.pad(
 )
 
 G = nx.DiGraph()
-for r in range(1, m.shape[0] - 1):
-    for c in range(1, m.shape[1] - 1):
-        nodeid = r * m.shape[0] + c
+for r in range(m.shape[0]):
+    for c in range(m.shape[1]):
+        nodeid = r * m.shape[1] + c
         if m[r, c] == "S":
             start = nodeid
         elif m[r, c] != ".":
-            edges = [(nodeid, t[0] * m.shape[0] + nodeid + t[1]) for t in con[m[r, c]]]
+            edges = [(nodeid, t[0] * m.shape[1] + nodeid + t[1]) for t in con[m[r, c]]]
             G.add_edges_from(edges)
 
 neighbors = list(G.in_edges(start))
