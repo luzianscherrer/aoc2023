@@ -16,13 +16,13 @@ for element in data:
 
     currentbox = boxes.get(box, [])
     if operation == "=":
-        found = False
-        for i, content in enumerate(currentbox):
-            if content[0] == label:
-                currentbox[i] = (label, lens)
-                found = True
-                break
-        if found == False:
+        idx = next(
+            filter(lambda i: currentbox[i][0] == label, range(len(currentbox))),
+            None,
+        )
+        if idx != None:
+            currentbox[idx] = (label, lens)
+        else:
             currentbox.append((label, lens))
     elif operation == "-":
         currentbox = list(filter(lambda a: a[0] != label, currentbox))
