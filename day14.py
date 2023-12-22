@@ -16,7 +16,7 @@ def tilt(m):
 
 
 cycles, lookup, found, i = 1000000000 * 4, {}, False, 0
-while True:
+while i < cycles:
     tilt(np.rot90(m, (4 - i) % 4))
     if i == 0:
         show(m)
@@ -28,6 +28,4 @@ while True:
         else:
             lookup[check] = i
     i += 1
-    if i == cycles:
-        break
 show(m)
