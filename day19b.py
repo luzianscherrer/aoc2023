@@ -21,7 +21,6 @@ def apply_rule(rule, item):
         elif instruction["operator"] == ">":
             item1 = copy.deepcopy(item)
             item1[instruction["variable"]][0] = instruction["value"] + 1
-            item = copy.deepcopy(item)
             item[instruction["variable"]][1] = instruction["value"]
         if instruction["destination"] == "A":
             ranges.append(item1)
