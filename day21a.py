@@ -19,4 +19,4 @@ def step(m):
 
 for i in range(64):
     step(m)
-print(np.count_nonzero(m == "O"))
+print((m == "O").sum())
