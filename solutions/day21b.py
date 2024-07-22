@@ -5,12 +5,12 @@ m = np.genfromtxt("day21input.txt", dtype=bytes, comments=None, delimiter=1).ast
 m[m == "S"] = "O"
 
 
-def cut_copy(m, dist, frm, to):
+def cut_copy(m, dist):
     start = (m.shape[0] // 2, m.shape[0] // 2)
     n = m.copy()
     for idx, val in np.ndenumerate(n):
-        if val == frm and abs(idx[0] - start[0]) + abs(idx[1] - start[1]) <= dist:
-            n[idx] = to
+        if val == "O" and abs(idx[0] - start[0]) + abs(idx[1] - start[1]) <= dist:
+            n[idx] = "."
     return n
 
 
@@ -31,12 +31,12 @@ for i in range(m.shape[0]):
     step(m)
 full_first = int((m == "O").sum())
 center_dist = m.shape[0] // 2
-n = cut_copy(m, center_dist, "O", ".")
+n = cut_copy(m, center_dist)
 corner_first = int((n == "O").sum())
 
 step(m)
 full_second = int((m == "O").sum())
-n = cut_copy(m, center_dist, "O", ".")
+n = cut_copy(m, center_dist)
 corner_second = int((n == "O").sum())
 
 size = steps // m.shape[0]
