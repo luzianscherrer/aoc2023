@@ -15,10 +15,8 @@ for i, coords in enumerate(input):
         coords[2] : coords[5] + 1,
     ] = i + 1
 
-count = 0
 stable = False
 while not stable:
-    count += 1
     stable = True
     for i in range(1, m.max() + 1):
         element = m == i
@@ -59,5 +57,5 @@ for i in range(1, m.max() + 1):
     if is_stable(n, i):
         removals += 1
 
-# runtime about 2.5 mins on an old intel mac
+# runtime ~2.5 mins on an old intel mac
 print(removals)
