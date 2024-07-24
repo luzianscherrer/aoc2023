@@ -3,6 +3,7 @@ import numpy as np
 
 m = np.genfromtxt("day23input.txt", dtype=bytes, comments=None, delimiter=1).astype(str)
 G = nx.Graph()
+
 for idx, val in np.ndenumerate(m):
     if val != "#":
         target = idx
@@ -19,13 +20,11 @@ for idx, val in np.ndenumerate(m):
         if neighbor[1] < m.shape[1] and m[neighbor] != "#":
             G.add_edge(idx, neighbor, weight=1)
 
-for node, degree in list(G.degree()):
-    if degree == 2:
-        neighbors = G.neighbors(node)
-        n = list(G.neighbors(node))
-        weight = nx.path_weight(G, [n[0], node, n[1]], "weight")
-        G.remove_node(node)
-        G.add_edge(*neighbors, weight=weight)
+for node, degree in list(filter(lambda n: n[1] == 2, G.degree())):
+    neighbors = list(G.neighbors(node))
+    weight = nx.path_weight(G, [neighbors[0], node, neighbors[1]], "weight")
+    G.remove_node(node)
+    G.add_edge(*neighbors, weight=weight)
 
 best = 0
 for path in nx.all_simple_paths(G, (0, 1), target):
