@@ -57,5 +57,5 @@ for i in range(1, m.max() + 1):
     if is_stable(n, i):
         removals += 1
 
-# runtime ~2.5 mins on an old intel mac
+# Runtime ~50s on a Mac M3
 print(removals)

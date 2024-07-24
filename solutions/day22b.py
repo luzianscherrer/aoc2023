@@ -46,5 +46,5 @@ for i in range(1, m.max() + 1):
     n[n == i] = 0
     total += fall(n, exclude_idx=i)
 
-# runtime ~16 mins on a modern linux machine
+# Runtime ~450s on a Mac M3
 print(total)
